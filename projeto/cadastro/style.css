@@ -1,0 +1,12 @@
+.div1 {
+    width: 300px;
+    height: 100px;
+    border: 1px solid blue;
+}
+
+.float-left-child {
+    float: left;
+  }
+  .inline-block-child {
+    display: inline-block;
+  }

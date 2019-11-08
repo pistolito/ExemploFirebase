@@ -1,5 +1,5 @@
 
-// !IMPORTANT: REPLACE WITH YOUR OWN CONFIG OBJECT BELOW
+
 
 
 // Initialize Firebase
@@ -18,7 +18,7 @@ firebase.initializeApp(config);
 
 // Firebase Database Reference and the child
 const dbRef = firebase.database().ref();
-const usersRef = dbRef.child('users');
+const notificacaoRef = dbRef.child('notificacao');
 
 
 	readUserData(); 
@@ -31,7 +31,7 @@ function readUserData() {
 
 	const userListUI = document.getElementById("user-list");
 
-	usersRef.on("value", snap => {
+	notificacaoRef.on("value", snap => {
 
 		userListUI.innerHTML = ""
 
@@ -56,7 +56,7 @@ function readUserData() {
 			deleteIconUI.setAttribute("userid", key);
 			deleteIconUI.addEventListener("click", deleteButtonClicked)
 			
-			$li.innerHTML = value.name;
+			$li.innerHTML = value.titulo;
 			$li.append(editIconUI);
 			$li.append(deleteIconUI);
 
@@ -78,7 +78,7 @@ function userClicked(e) {
 
 		var userID = e.target.getAttribute("user-key");
 
-		const userRef = dbRef.child('users/' + userID);
+		const userRef = dbRef.child('notificacao/' + userID);
 		const userDetailUI = document.getElementById("user-detail");
 
 		userRef.on("value", snap => {
@@ -92,18 +92,12 @@ function userClicked(e) {
 			})
 
 		});
-	
 
 }
 
 
 
-
-
-// --------------------------
-// ADD
-// --------------------------
-
+//adicionar
 const addUserBtnUI = document.getElementById("add-user-btn");
 addUserBtnUI.addEventListener("click", addUserBtnClicked)
 
@@ -111,7 +105,7 @@ addUserBtnUI.addEventListener("click", addUserBtnClicked)
 
 function addUserBtnClicked() {
 
-	const usersRef = dbRef.child('users');
+	const notificacaoRef = dbRef.child('notificacao');
 
 	const addUserInputsUI = document.getElementsByClassName("user-input");
 
@@ -126,7 +120,7 @@ function addUserBtnClicked() {
         newUser[key] = value;
     }
 
-	usersRef.push(newUser)
+	notificacaoRef.push(newUser)
 
     
    console.log(myPro)
@@ -136,25 +130,21 @@ function addUserBtnClicked() {
 }
 
 
-// --------------------------
-// DELETE
-// --------------------------
+//deletar
 function deleteButtonClicked(e) {
 
 		e.stopPropagation();
 
 		var userID = e.target.getAttribute("userid");
 
-		const userRef = dbRef.child('users/' + userID);
+		const userRef = dbRef.child('notificacao/' + userID);
 		
 		userRef.remove();
 
 }
 
 
-// --------------------------
-// EDIT
-// --------------------------
+//editar
 function editButtonClicked(e) {
 	
 	document.getElementById('edit-user-module').style.display = "block";
@@ -162,7 +152,7 @@ function editButtonClicked(e) {
 	//set user id to the hidden input field
 	document.querySelector(".edit-userid").value = e.target.getAttribute("userid");
 
-	const userRef = dbRef.child('users/' + e.target.getAttribute("userid"));
+	const userRef = dbRef.child('notificacao/' + e.target.getAttribute("userid"));
 
 	// set data to the user field
 	const editUserInputsUI = document.querySelectorAll(".edit-user-input");
@@ -189,7 +179,7 @@ function editButtonClicked(e) {
 function saveUserBtnClicked(e) {
  
 	const userID = document.querySelector(".edit-userid").value;
-	const userRef = dbRef.child('users/' + userID);
+	const userRef = dbRef.child('notificacao/' + userID);
 
 	var editedUserObject = {}
 
